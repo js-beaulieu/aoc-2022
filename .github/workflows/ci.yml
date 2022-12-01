@@ -1,7 +1,12 @@
 name: CI checks
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
 
 jobs:
+  # required status checks
   code-quality:
     runs-on: ubuntu-22.04
     steps:
@@ -30,4 +35,30 @@ jobs:
     - name: Run tests
       run: make test-cov
     - name: Report to codecov
+      if: github.event_name == 'pull_request'
       uses: codecov/codecov-action@v3.1.1
+  status-check:
+    runs-on: ubuntu-22.04
+    needs: [code-quality, tests]
+    if: always()
+    steps:
+      - name: Success
+        if: ${{ !(contains(needs.*.result, 'failure')) }}
+        run: exit 0
+      - name: Failure
+        if: ${{ contains(needs.*.result, 'failure') }}
+        run: exit 1
+
+  # auto merge dependabot PRs that still pass checks
+  automerge:
+    runs-on: ubuntu-22.04
+    needs: status-check
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Merge PR
+        uses: ahmadnassri/action-dependabot-auto-merge@v2
+        with:
+          target: minor
+          github-token: ${{ secrets.GITHUB_TOKEN }}
