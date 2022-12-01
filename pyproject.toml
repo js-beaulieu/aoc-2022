@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "aoc-2022"
+version = "0.1.0"
+description = "Advent of Code 2022"
+authors = ["Jean-Sébastien Beaulieu <me@jsbeaulieu.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "aoc"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.0"
+black = "^22.10.0"
+pytest-cov = "^4.0.0"
+pre-commit = "^2.20.0"
+isort = "^5.10.1"
+mypy = "^0.991"
+flake8 = "^6.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.coverage.run]
+branch = "True"
+
+[tool.coverage.report]
+fail_under = 90
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+]
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-rA -q"
+log_cli = "True"
+testpaths = ["test"]
