@@ -17,3 +17,12 @@ def get_input(*, day: int) -> str:
     if not day_path.exists() or not day_path.is_file():
         raise DataError(f"No data available for day {day}")
     return day_path.read_text("utf-8")
+
+
+def get_lines(*, day: int) -> list[str]:
+    """
+    Get an array of lines for a given day
+    :param day: Number of the day of the month
+    :return: File contents split by line
+    """
+    return get_input(day=day).splitlines()
