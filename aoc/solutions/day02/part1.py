@@ -1,46 +1,17 @@
-from enum import Enum, auto
-
 from aoc.data import get_lines
+from aoc.solutions.day02._common import Shape, get_score_for_battle
 
-
-class Shape(Enum):
-    ROCK = auto()
-    PAPER = auto()
-    SCISSORS = auto()
-
-
-SHAPE_WINS_OVER: dict[Shape, list[Shape]] = {
-    Shape.ROCK: [Shape.SCISSORS],
-    Shape.PAPER: [Shape.ROCK],
-    Shape.SCISSORS: [Shape.PAPER],
-}
-
-
-SHAPE_SCORES: dict[Shape, int] = {
-    Shape.ROCK: 1,
-    Shape.PAPER: 2,
-    Shape.SCISSORS: 3,
-}
-
-
-def beats(mine: Shape, theirs: Shape) -> bool:
-    return theirs in SHAPE_WINS_OVER[mine]
+_OPPONENTS = {"A": Shape.ROCK, "B": Shape.PAPER, "C": Shape.SCISSORS}
+_MINES = {"X": Shape.ROCK, "Y": Shape.PAPER, "Z": Shape.SCISSORS}
 
 
 def solve(games: list[str]) -> int:
-    opponents = {"A": Shape.ROCK, "B": Shape.PAPER, "C": Shape.SCISSORS}
-    mines = {"X": Shape.ROCK, "Y": Shape.PAPER, "Z": Shape.SCISSORS}
+
     score = 0
     for game in games:
         opponent, mine = game.split(" ")
-        opponent_shape, my_shape = opponents[opponent], mines[mine]
-
-        score += SHAPE_SCORES[my_shape]
-        if opponent_shape == my_shape:
-            score += 3
-        elif beats(my_shape, opponent_shape):
-            score += 6
-
+        opponent_shape, my_shape = _OPPONENTS[opponent], _MINES[mine]
+        score += get_score_for_battle(my_shape, opponent_shape)
     return score
 
 
