@@ -9,7 +9,7 @@ test:
 
 .PHONY: test-cov
 test-cov:
-	poetry run pytest --cov-report=xml
+	poetry run pytest --cov=aoc --cov-report=xml
 
 .PHONY: cq
 cq:
