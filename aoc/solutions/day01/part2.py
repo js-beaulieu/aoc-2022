@@ -11,4 +11,4 @@ def solve(lines: list[str]) -> int:
 if __name__ == "__main__":
     lines = get_lines(day=1)
     solution = solve(lines)
-    print(f"The largest amount of calories is {solution}")
+    print(f"The sum of calories for top 3 elves is {solution}")
