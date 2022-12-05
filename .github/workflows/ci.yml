@@ -33,7 +33,7 @@ jobs:
     - name: Install dependencies
       run: poetry install
     - name: Run tests
-      run: make test-cov
+      run: poetry run pytest --cov=aoc --cov-report=xml
     - name: Report to codecov
       uses: codecov/codecov-action@v3.1.1
       with:

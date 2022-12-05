@@ -6,4 +6,4 @@
 ## Setup
 
 * Setup using `poetry`
-* Check `Makefile` for utility scripts
+* Check `justfile` for utility scripts - uses [just](https://github.com/casey/just)
