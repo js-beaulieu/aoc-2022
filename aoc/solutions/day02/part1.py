@@ -6,7 +6,6 @@ _MINES = {"X": Shape.ROCK, "Y": Shape.PAPER, "Z": Shape.SCISSORS}
 
 
 def solve(games: list[str]) -> int:
-
     score = 0
     for game in games:
         opponent, mine = game.split(" ")
